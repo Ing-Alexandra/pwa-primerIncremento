@@ -7,7 +7,8 @@ class ArticleManager {
       const defaultArticles = [
         { id: 1, title: "Optimización de Redes Neuronales Profundas", status: "Enviado" },
         { id: 2, title: "Arquitectura Escalable en Computación en la Nube", status: "En revisión" },
-        { id: 3, title: "Seguridad de Datos mediante Blockchain", status: "Comentado" }
+        { id: 3, title: "Seguridad de Datos mediante Blockchain", status: "Comentado" },
+        { id: 4, title: "Inteligencia Artificial aplicada a la Ciberseguridad", status: "Enviado" }
       ];
       ArticleStorage.saveAll(defaultArticles);
     }
