@@ -5,93 +5,107 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AcademicReview</title>
 
+<!-- Fuente -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/styles.css">
+
+<!-- CSS -->
+<link rel="stylesheet" href="./css/styles.css">
+
+<!-- Manifest PWA -->
+<link rel="manifest" href="./manifest.json">
+
 </head>
 
 <body>
 
 <div class="app-container">
 
-<!-- SIDEBAR -->
-<aside class="sidebar">
-<div class="logo">AcademicReview</div>
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="logo">AcademicReview</div>
+    <nav>
+      <a href="#" class="active" data-view="articles">Artículos</a>
+      <a href="#" data-view="reviewers">Revisores</a>
+    </nav>
+  </aside>
 
-<nav>
-<a href="#" class="active" data-view="articles">Artículos</a>
-<a href="#" data-view="reviewers">Revisores</a>
-</nav>
-</aside>
+  <!-- MAIN -->
+  <div class="main-content">
 
-<!-- MAIN -->
-<div class="main-content">
+    <header class="topbar">
+      <h1>Tablero de Evaluación</h1>
+      <div class="avatar">AM</div>
+    </header>
 
-<header class="topbar">
-<h1>Tablero de Evaluación</h1>
-<div class="avatar">AM</div>
-</header>
+    <!-- STATS -->
+    <section class="stats">
+      <div class="stat-card">
+        <h3 id="reviewCount">0</h3>
+        <p>En revisión</p>
+      </div>
+      <div class="stat-card">
+        <h3 id="approvedCount">0</h3>
+        <p>Aprobados</p>
+      </div>
+      <div class="stat-card">
+        <h3 id="rejectedCount">0</h3>
+        <p>Rechazados</p>
+      </div>
+    </section>
 
-<!-- STATS -->
-<section class="stats">
-<div class="stat-card">
-<h3 id="reviewCount">0</h3>
-<p>En revisión</p>
+    <!-- SUBIR -->
+    <section class="upload-section">
+      <h2>Subir artículo</h2>
+      <form id="articleForm" class="upload-form">
+        <input id="title" placeholder="Título" required>
+        <input id="author" placeholder="Autor" required>
+
+        <select id="reviewer" required>
+          <option value="">Asignar profesor</option>
+          <option>Dr. López</option>
+          <option>Dra. Fernández</option>
+          <option>Dr. Ramírez</option>
+        </select>
+
+        <label class="file-label">
+          Seleccionar PDF
+          <input type="file" id="pdfFile" accept=".pdf" required>
+        </label>
+
+        <button type="submit">Subir</button>
+      </form>
+    </section>
+
+    <!-- TABLERO -->
+    <section id="article-board" class="article-board"></section>
+
+    <!-- REVISORES -->
+    <section id="reviewers" class="reviewers hidden">
+      <h2>Revisores</h2>
+      <ul>
+        <li>Dr. López — Responsable Académico</li>
+        <li>Dra. Fernández — Responsable Académico</li>
+        <li>Dr. Ramírez — Responsable Académico</li>
+      </ul>
+    </section>
+
+  </div>
 </div>
 
-<div class="stat-card">
-<h3 id="approvedCount">0</h3>
-<p>Aprobados</p>
-</div>
+<!-- JS -->
+<script src="./js/articleStorage.js"></script>
+<script src="./js/articleManager.js"></script>
+<script src="./js/articleBoard.js"></script>
+<script src="./js/app.js"></script>
 
-<div class="stat-card">
-<h3 id="rejectedCount">0</h3>
-<p>Rechazados</p>
-</div>
-</section>
-
-<!-- SUBIR -->
-<section class="upload-section">
-<h2>Subir artículo</h2>
-
-<form id="articleForm" class="upload-form">
-<input id="title" placeholder="Título" required>
-<input id="author" placeholder="Autor" required>
-
-<select id="reviewer" required>
-<option value="">Asignar profesor</option>
-<option>Dr. López</option>
-<option>Dra. Fernández</option>
-<option>Dr. Ramírez</option>
-</select>
-
-<label class="file-label">
-Seleccionar PDF
-<input type="file" id="pdfFile" accept=".pdf" required>
-</label>
-
-<button type="submit">Subir</button>
-</form>
-</section>
-
-<section id="article-board" class="article-board"></section>
-
-<!-- REVISORES -->
-<section id="reviewers" class="reviewers hidden">
-<h2>Revisores</h2>
-<ul>
-<li>Dr. López — Responsable Académico</li>
-<li>Dra. Fernández — Responsable Académico</li>
-<li>Dr. Ramírez — Responsable Académico</li>
-</ul>
-</section>
-
-</div>
-</div>
-
-<script src="js/articleStorage.js"></script>
-<script src="js/articleManager.js"></script>
-<script src="js/articleBoard.js"></script>
-<script src="js/app.js"></script>
+<!-- Service Worker -->
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./service-worker.js')
+    .then(() => console.log('Service Worker registrado'))
+    .catch(console.error);
+}
+</script>
 
 </body>
 </html>
