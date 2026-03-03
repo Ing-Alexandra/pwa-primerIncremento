@@ -1,66 +1,44 @@
 class ArticleBoard {
 
-  static render() {
-    const container = document.getElementById("article-board");
-    if (!container) return;
+constructor(manager){
+this.manager = manager;
+this.board = document.getElementById("article-board");
+}
 
-    // Limpiar contenedor sin usar innerHTML
-    while (container.firstChild) {
-      container.removeChild(container.firstChild);
-    }
+async render(){
 
-    const articles = ArticleManager.getArticles();
+this.board.innerHTML="";
 
-    articles.forEach(article => {
-      const card = document.createElement("div");
-      card.classList.add("article-card");
+this.manager.articles.forEach((a,i)=>{
 
-      // Título
-      const title = document.createElement("h3");
-      title.classList.add("article-title");
-      title.textContent = article.title;
+const card=document.createElement("div");
+card.className="article-card";
 
-      // Autor
-      const author = document.createElement("p");
-      author.classList.add("article-author");
-      author.textContent = `Autor: ${article.author}`;
+card.innerHTML=`
+<h3>${a.title}</h3>
+<p>Autor: ${a.author}</p>
+<p>Profesor: ${a.reviewer}</p>
 
-      // Estado actual
-      const statusLabel = document.createElement("label");
-      statusLabel.textContent = "Estado: ";
-      statusLabel.setAttribute("for", `status-${article.id}`);
+<select>
+<option ${a.status==="En revisión"?"selected":""}>En revisión</option>
+<option ${a.status==="Aprobado"?"selected":""}>Aprobado</option>
+<option ${a.status==="Rechazado"?"selected":""}>Rechazado</option>
+</select>
+`;
 
-      const statusSelect = document.createElement("select");
-      statusSelect.id = `status-${article.id}`;
-      statusSelect.classList.add("article-status");
+card.querySelector("select")
+.addEventListener("change", async (e)=>{
 
-      const statuses = ["pending", "approved", "rejected"];
+await this.manager.updateStatus(i,e.target.value);
 
-      statuses.forEach(status => {
-        const option = document.createElement("option");
-        option.value = status;
-        option.textContent = status.charAt(0).toUpperCase() + status.slice(1);
+await this.manager.init(); // recarga artículos
 
-        if (article.status === status) {
-          option.selected = true;
-        }
+});
 
-        statusSelect.appendChild(option);
-      });
+this.board.appendChild(card);
 
-      // Evento para actualizar estado
-      statusSelect.addEventListener("change", (e) => {
-        const newStatus = e.target.value;
-        ArticleManager.updateStatus(article.id, newStatus);
-      });
+});
 
-      // Ensamblar tarjeta
-      card.appendChild(title);
-      card.appendChild(author);
-      card.appendChild(statusLabel);
-      card.appendChild(statusSelect);
+}
 
-      container.appendChild(card);
-    });
-  }
 }
