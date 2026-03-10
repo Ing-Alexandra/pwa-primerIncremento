@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>AcademicReview</title>
 
-<!-- Fuente -->
+<meta name="description" content="Aplicación PWA para gestión y revisión de artículos académicos">
+
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 
-<!-- CSS -->
 <link rel="stylesheet" href="./css/styles.css">
 
-<!-- Manifest PWA -->
 <link rel="manifest" href="./manifest.json">
 
 </head>
@@ -30,7 +30,7 @@
   </aside>
 
   <!-- MAIN -->
-  <div class="main-content">
+  <main class="main-content">
 
     <header class="topbar">
       <h1>Tablero de Evaluación</h1>
@@ -40,15 +40,15 @@
     <!-- STATS -->
     <section class="stats">
       <div class="stat-card">
-        <h3 id="reviewCount">0</h3>
+        <h2 id="reviewCount">0</h2>
         <p>En revisión</p>
       </div>
       <div class="stat-card">
-        <h3 id="approvedCount">0</h3>
+        <h2 id="approvedCount">0</h2>
         <p>Aprobados</p>
       </div>
       <div class="stat-card">
-        <h3 id="rejectedCount">0</h3>
+        <h2 id="rejectedCount">0</h2>
         <p>Rechazados</p>
       </div>
     </section>
@@ -56,23 +56,28 @@
     <!-- SUBIR -->
     <section class="upload-section">
       <h2>Subir artículo</h2>
+
       <form id="articleForm" class="upload-form">
+
+        <label for="title">Título</label>
         <input id="title" placeholder="Título" required>
+
+        <label for="author">Autor</label>
         <input id="author" placeholder="Autor" required>
 
+        <label for="reviewer">Asignar profesor</label>
         <select id="reviewer" required>
-          <option value="">Asignar profesor</option>
+          <option value="">Seleccionar</option>
           <option>Dr. López</option>
           <option>Dra. Fernández</option>
           <option>Dr. Ramírez</option>
         </select>
 
-        <label class="file-label">
-          Seleccionar PDF
-          <input type="file" id="pdfFile" accept=".pdf" required>
-        </label>
+        <label for="pdfFile">Seleccionar PDF</label>
+        <input type="file" id="pdfFile" accept=".pdf" required>
 
         <button type="submit">Subir</button>
+
       </form>
     </section>
 
@@ -89,21 +94,17 @@
       </ul>
     </section>
 
-  </div>
+  </main>
 </div>
 
-<!-- JS -->
-<script src="./js/articleStorage.js"></script>
-<script src="./js/articleManager.js"></script>
-<script src="./js/articleBoard.js"></script>
-<script src="./js/app.js"></script>
+<script src="./js/articleStorage.js" defer></script>
+<script src="./js/articleManager.js" defer></script>
+<script src="./js/articleBoard.js" defer></script>
+<script src="./js/app.js" defer></script>
 
-<!-- Service Worker -->
 <script>
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('./service-worker.js')
-    .then(() => console.log('Service Worker registrado'))
-    .catch(console.error);
 }
 </script>
 

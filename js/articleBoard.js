@@ -19,7 +19,8 @@ card.innerHTML=`
 <p>Autor: ${a.author}</p>
 <p>Profesor: ${a.reviewer}</p>
 
-<select>
+<label for="status-${i}">Estado</label>
+<select id="status-${i}">
 <option ${a.status==="En revisión"?"selected":""}>En revisión</option>
 <option ${a.status==="Aprobado"?"selected":""}>Aprobado</option>
 <option ${a.status==="Rechazado"?"selected":""}>Rechazado</option>
@@ -29,9 +30,11 @@ card.innerHTML=`
 card.querySelector("select")
 .addEventListener("change", async (e)=>{
 
-await this.manager.updateStatus(i,e.target.value);
+a.status = e.target.value;
 
-await this.manager.init(); // recarga artículos
+await articleStorage.updateArticle(a);
+
+await this.manager.init();
 
 });
 
