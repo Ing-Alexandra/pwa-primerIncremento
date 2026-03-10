@@ -1,26 +1,112 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Academic Review PWA</title>
-  <link rel="stylesheet" href="css/styles.css">
-  <link rel="manifest" href="manifest.json">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AcademicReview</title>
+
+<meta name="description" content="Aplicación PWA para gestión y revisión de artículos académicos">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="./css/styles.css">
+
+<link rel="manifest" href="./manifest.json">
+
 </head>
+
 <body>
 
-  <header>
-    <h1>Tablero de Estado de Artículos</h1>
-  </header>
+<div class="app-container">
 
-  <main>
-    <section id="article-board"></section>
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="logo">AcademicReview</div>
+    <nav>
+      <a href="#" class="active" data-view="articles">Artículos</a>
+      <a href="#" data-view="reviewers">Revisores</a>
+    </nav>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main-content">
+
+    <header class="topbar">
+      <h1>Tablero de Evaluación</h1>
+      <div class="avatar">AM</div>
+    </header>
+
+    <!-- STATS -->
+    <section class="stats">
+      <div class="stat-card">
+        <h2 id="reviewCount">0</h2>
+        <p>En revisión</p>
+      </div>
+      <div class="stat-card">
+        <h2 id="approvedCount">0</h2>
+        <p>Aprobados</p>
+      </div>
+      <div class="stat-card">
+        <h2 id="rejectedCount">0</h2>
+        <p>Rechazados</p>
+      </div>
+    </section>
+
+    <!-- SUBIR -->
+    <section class="upload-section">
+      <h2>Subir artículo</h2>
+
+      <form id="articleForm" class="upload-form">
+
+        <label for="title">Título</label>
+        <input id="title" placeholder="Título" required>
+
+        <label for="author">Autor</label>
+        <input id="author" placeholder="Autor" required>
+
+        <label for="reviewer">Asignar profesor</label>
+        <select id="reviewer" required>
+          <option value="">Seleccionar</option>
+          <option>Dr. López</option>
+          <option>Dra. Fernández</option>
+          <option>Dr. Ramírez</option>
+        </select>
+
+        <label for="pdfFile">Seleccionar PDF</label>
+        <input type="file" id="pdfFile" accept=".pdf" required>
+
+        <button type="submit">Subir</button>
+
+      </form>
+    </section>
+
+    <!-- TABLERO -->
+    <section id="article-board" class="article-board"></section>
+
+    <!-- REVISORES -->
+    <section id="reviewers" class="reviewers hidden">
+      <h2>Revisores</h2>
+      <ul>
+        <li>Dr. López — Responsable Académico</li>
+        <li>Dra. Fernández — Responsable Académico</li>
+        <li>Dr. Ramírez — Responsable Académico</li>
+      </ul>
+    </section>
+
   </main>
+</div>
 
-  <script src="js/articleStorage.js"></script>
-  <script src="js/articleManager.js"></script>
-  <script src="js/articleBoard.js"></script>
-  <script src="js/app.js"></script>
+<script src="./js/articleStorage.js" defer></script>
+<script src="./js/articleManager.js" defer></script>
+<script src="./js/articleBoard.js" defer></script>
+<script src="./js/app.js" defer></script>
+
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./service-worker.js')
+}
+</script>
 
 </body>
 </html>

@@ -1,33 +1,38 @@
 class ArticleManager {
 
-  static initialize() {
-    const existing = ArticleStorage.getAll();
+constructor(){
+this.articles=[];
+}
 
-    if (existing.length === 0) {
-      const defaultArticles = [
-        { id: 1, title: "Optimización de Redes Neuronales Profundas", status: "Enviado" },
-        { id: 2, title: "Arquitectura Escalable en Computación en la Nube", status: "En revisión" },
-        { id: 3, title: "Seguridad de Datos mediante Blockchain", status: "Comentado" },
-        { id: 4, title: "Inteligencia Artificial aplicada a la Ciberseguridad", status: "Enviado" }
-      ];
-      ArticleStorage.saveAll(defaultArticles);
-    }
-  }
+async init(){
+this.articles = await ArticleStorage.load();
+await board.render();
+updateStats(this);
+}
 
-  static getArticles() {
-    return ArticleStorage.getAll();
-  }
+async addArticle(article){
 
-  static updateStatus(id, newStatus) {
-    const articles = ArticleStorage.getAll();
-    const updated = articles.map(article => {
-      if (article.id === id) {
-        article.status = newStatus;
-      }
-      return article;
-    });
+await ArticleStorage.add(article);
 
-    ArticleStorage.saveAll(updated);
-  }
+this.articles = await ArticleStorage.load();
 
+}
+
+async updateStatus(index,status){
+
+const article=this.articles[index];
+
+await ArticleStorage.update(article.id,status);
+
+this.articles = await ArticleStorage.load();
+
+}
+
+getStats(){
+return{
+review:this.articles.filter(a=>a.status==="En revisión").length,
+approved:this.articles.filter(a=>a.status==="Aprobado").length,
+rejected:this.articles.filter(a=>a.status==="Rechazado").length
+};
+}
 }
